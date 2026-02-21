@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title">
+  <title>TryHackMe PT1</title>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#b1112c"/>
+      <stop offset="100%" stop-color="#3a1022"/>
+    </linearGradient>
+  </defs>
+  <rect width="240" height="240" fill="#2a0a1a"/>
+  <path d="M28 20h184v136l-92 64-92-64z" fill="url(#g)" stroke="#ff6b79" stroke-width="8"/>
+  <text x="120" y="84" text-anchor="middle" fill="#ffd9dc" font-size="14" font-family="Arial, sans-serif" font-weight="700">TryHackMe</text>
+  <text x="120" y="108" text-anchor="middle" fill="#ffe8ea" font-size="16" font-family="Arial, sans-serif" font-weight="600">CERTIFIED</text>
+  <rect x="44" y="126" width="152" height="38" fill="#ff6b79"/>
+  <text x="120" y="152" text-anchor="middle" fill="#3a1022" font-size="32" font-family="Arial, sans-serif" font-weight="800">PT1</text>
+</svg>

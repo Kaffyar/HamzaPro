@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title">
+  <title>CompTIA CySA Plus</title>
+  <circle cx="120" cy="120" r="102" fill="#f4f4f5" stroke="#d90f32" stroke-width="16"/>
+  <text x="120" y="78" text-anchor="middle" fill="#d90f32" font-size="25" font-family="Arial, sans-serif" font-weight="700">CompTIA</text>
+  <text x="120" y="118" text-anchor="middle" fill="#1f2937" font-size="36" font-family="Arial, sans-serif" font-weight="700">CySA+</text>
+  <rect x="54" y="132" width="132" height="30" rx="15" fill="none" stroke="#d90f32" stroke-width="3"/>
+  <text x="120" y="153" text-anchor="middle" fill="#d90f32" font-size="19" font-family="Arial, sans-serif" font-weight="700">CERTIFIED</text>
+  <text x="120" y="188" text-anchor="middle" fill="#4b5563" font-size="22" font-family="Arial, sans-serif" font-weight="600">Plus Series</text>
+</svg>
