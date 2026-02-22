@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { CINEMATIC_MODE, HERO_PARALLAX_INTENSITY, MOBILE_MOTION_MULTIPLIER } from "../config/motion";
 import { usePowerMode } from "./usePowerMode";
+import { addMediaQueryChangeListener, removeMediaQueryChangeListener } from "./mediaQueryListener";
 import { useReducedMotionSafe } from "./useReducedMotionSafe";
 
 export function useCinematicCapability() {
@@ -19,12 +20,12 @@ export function useCinematicCapability() {
     };
 
     sync();
-    widthQuery.addEventListener("change", sync);
-    pointerQuery.addEventListener("change", sync);
+    addMediaQueryChangeListener(widthQuery, sync);
+    addMediaQueryChangeListener(pointerQuery, sync);
 
     return () => {
-      widthQuery.removeEventListener("change", sync);
-      pointerQuery.removeEventListener("change", sync);
+      removeMediaQueryChangeListener(widthQuery, sync);
+      removeMediaQueryChangeListener(pointerQuery, sync);
     };
   }, []);
 

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { addMediaQueryChangeListener, removeMediaQueryChangeListener } from "../hooks/mediaQueryListener";
 import { usePowerMode } from "../hooks/usePowerMode";
 import { useReducedMotionSafe } from "../hooks/useReducedMotionSafe";
 
@@ -6,7 +7,9 @@ type SignatureScrollbarProps = {
   progress: number;
 };
 
-type LenisLike = { scrollTo: (target: number) => void };
+type LenisLike = {
+  scrollTo: (target: number, options?: { immediate?: boolean }) => void;
+};
 
 export function SignatureScrollbar({ progress }: SignatureScrollbarProps) {
   const { reducedMotion } = useReducedMotionSafe();
@@ -19,8 +22,8 @@ export function SignatureScrollbar({ progress }: SignatureScrollbarProps) {
     const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
     const syncDesktop = () => setDesktop(mediaQuery.matches);
     syncDesktop();
-    mediaQuery.addEventListener("change", syncDesktop);
-    return () => mediaQuery.removeEventListener("change", syncDesktop);
+    addMediaQueryChangeListener(mediaQuery, syncDesktop);
+    return () => removeMediaQueryChangeListener(mediaQuery, syncDesktop);
   }, []);
 
   useEffect(() => {
@@ -37,7 +40,7 @@ export function SignatureScrollbar({ progress }: SignatureScrollbarProps) {
       const lenis = (window as Window & { lenis?: LenisLike }).lenis;
 
       if (lenis) {
-        lenis.scrollTo(targetY);
+        lenis.scrollTo(targetY, { immediate: true });
       } else {
         window.scrollTo({ top: targetY, behavior: "auto" });
       }

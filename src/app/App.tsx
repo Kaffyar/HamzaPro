@@ -91,7 +91,11 @@ export default function App() {
   useEffect(() => {
     if (!lenisEnabled) return;
 
-    const lenis = new Lenis({ smoothWheel: true, syncTouch: false, lerp: 0.12 });
+    const lenis = new Lenis({
+      smoothWheel: false,
+      syncTouch: true,
+      lerp: 1,
+    });
     (window as Window & { lenis?: Lenis }).lenis = lenis;
 
     let rafId = 0;

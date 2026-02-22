@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { addMediaQueryChangeListener, removeMediaQueryChangeListener } from "./mediaQueryListener";
 
 export function useReducedMotionSafe() {
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -8,9 +9,9 @@ export function useReducedMotionSafe() {
     const update = () => setReducedMotion(mediaQuery.matches);
 
     update();
-    mediaQuery.addEventListener("change", update);
+    addMediaQueryChangeListener(mediaQuery, update);
 
-    return () => mediaQuery.removeEventListener("change", update);
+    return () => removeMediaQueryChangeListener(mediaQuery, update);
   }, []);
 
   return { reducedMotion };

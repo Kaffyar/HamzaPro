@@ -17,16 +17,18 @@ type SplitResult = {
   revert: () => void;
 };
 
-type LenisLike = { scrollTo: (target: string) => void };
+type LenisLike = {
+  scrollTo: (target: string, options?: { immediate?: boolean }) => void;
+};
 
 function scrollToSection(href: `#${string}`) {
   const lenis = (window as Window & { lenis?: LenisLike }).lenis;
   if (lenis) {
-    lenis.scrollTo(href);
+    lenis.scrollTo(href, { immediate: true });
     return;
   }
   const target = document.querySelector(href);
-  if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+  if (target) target.scrollIntoView({ behavior: "auto", block: "start" });
 }
 
 export function HeroSignature({

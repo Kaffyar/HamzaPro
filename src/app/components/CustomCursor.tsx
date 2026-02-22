@@ -1,5 +1,6 @@
-﻿import { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { useEffect, useState } from "react";
+import { addMediaQueryChangeListener, removeMediaQueryChangeListener } from "../hooks/mediaQueryListener";
 
 const BASE_ROTATION = 20;
 const INTERACTIVE_SELECTOR =
@@ -66,12 +67,12 @@ export function CustomCursor() {
 
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseout", handleMouseLeave);
-    mediaQuery.addEventListener("change", syncEnabledState);
+    addMediaQueryChangeListener(mediaQuery, syncEnabledState);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseout", handleMouseLeave);
-      mediaQuery.removeEventListener("change", syncEnabledState);
+      removeMediaQueryChangeListener(mediaQuery, syncEnabledState);
       root.classList.remove("custom-cursor-active");
     };
   }, []);

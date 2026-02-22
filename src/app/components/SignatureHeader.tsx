@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Github, Linkedin, Mail, Menu, MoonStar, X } from "lucide-react";
 import { consoleLines, navItems, socialLinks } from "../config/siteContent";
+import { addMediaQueryChangeListener, removeMediaQueryChangeListener } from "../hooks/mediaQueryListener";
 import { useSectionProgress } from "../hooks/useSectionProgress";
 
 type SignatureHeaderProps = {
@@ -9,17 +10,19 @@ type SignatureHeaderProps = {
   onToggleContrast: () => void;
 };
 
-type LenisLike = { scrollTo: (target: string) => void };
+type LenisLike = {
+  scrollTo: (target: string, options?: { immediate?: boolean }) => void;
+};
 
 function scrollToHref(href: `#${string}`) {
   const lenis = (window as Window & { lenis?: LenisLike }).lenis;
   if (lenis) {
-    lenis.scrollTo(href);
+    lenis.scrollTo(href, { immediate: true });
     return;
   }
   const target = document.querySelector(href);
   if (target) {
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    target.scrollIntoView({ behavior: "auto", block: "start" });
   }
 }
 
@@ -45,8 +48,8 @@ export function SignatureHeader({ introComplete, isContrasted, onToggleContrast 
       }
     };
     syncDesktopState();
-    mediaQuery.addEventListener("change", syncDesktopState);
-    return () => mediaQuery.removeEventListener("change", syncDesktopState);
+    addMediaQueryChangeListener(mediaQuery, syncDesktopState);
+    return () => removeMediaQueryChangeListener(mediaQuery, syncDesktopState);
   }, []);
 
   useEffect(() => {

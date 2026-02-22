@@ -1,6 +1,7 @@
 import { Hand, MousePointer2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { CURSOR_ENABLED } from "../config/motion";
+import { addMediaQueryChangeListener, removeMediaQueryChangeListener } from "../hooks/mediaQueryListener";
 import { usePowerMode } from "../hooks/usePowerMode";
 import { useReducedMotionSafe } from "../hooks/useReducedMotionSafe";
 
@@ -25,9 +26,9 @@ export function SignatureCursor() {
     };
 
     sync();
-    mediaQuery.addEventListener("change", sync);
+    addMediaQueryChangeListener(mediaQuery, sync);
 
-    return () => mediaQuery.removeEventListener("change", sync);
+    return () => removeMediaQueryChangeListener(mediaQuery, sync);
   }, [reducedMotion, shouldReduceEffects]);
 
   useEffect(() => {
