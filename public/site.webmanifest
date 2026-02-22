@@ -1,0 +1,16 @@
+{
+  "name": "Hamzah Alkaff Portfolio",
+  "short_name": "Hamzah Portfolio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#060504",
+  "theme_color": "#060504",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

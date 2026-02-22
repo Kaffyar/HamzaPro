@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Hamzah Alkaff favicon">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#1b130a" />
+      <stop offset="100%" stop-color="#060504" />
+    </linearGradient>
+    <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#efd8ac" />
+      <stop offset="100%" stop-color="#c99a52" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#bg)" />
+  <rect x="4" y="4" width="56" height="56" rx="11" fill="none" stroke="url(#gold)" stroke-width="1.5" opacity="0.55" />
+  <path d="M20 18h6v10h12V18h6v28h-6V34H26v12h-6V18z" fill="url(#gold)" />
+</svg>

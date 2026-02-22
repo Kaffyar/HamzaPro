@@ -6,7 +6,7 @@ export function EducationSection() {
   const { ref, isInView } = useInView();
 
   return (
-    <section className="relative py-24 overflow-hidden bg-slate-900/20" ref={ref}>
+    <section id="education" className="signature-section relative py-24 overflow-hidden bg-slate-900/20" ref={ref}>
       <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

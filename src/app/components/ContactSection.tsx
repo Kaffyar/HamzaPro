@@ -112,7 +112,7 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative py-24 overflow-hidden" ref={ref}>
+    <section id="contact" className="signature-section relative py-24 overflow-hidden" ref={ref}>
       <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

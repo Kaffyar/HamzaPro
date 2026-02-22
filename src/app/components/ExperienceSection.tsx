@@ -8,7 +8,7 @@ const experiences = [
     company: "Kanz Industry",
     subtitle: "Full-time",
     location: "Jeddah, Makkah, Saudi Arabia | On-site",
-    period: "Jan 2026 - Present | 2 mos",
+    period: "Jan 2026 - Present",
     achievements: [],
     tech: [],
   },
@@ -47,7 +47,7 @@ export function ExperienceSection() {
   const { ref, isInView } = useInView();
 
   return (
-    <section id="experience" className="relative py-24 overflow-hidden bg-slate-900/20" ref={ref}>
+    <section id="experience" className="signature-section relative py-24 overflow-hidden bg-slate-900/20" ref={ref}>
       <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

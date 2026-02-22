@@ -27,7 +27,7 @@ export function AboutSection() {
   };
 
   return (
-    <section id="about" className="relative py-24 overflow-hidden" ref={ref}>
+    <section id="about" className="signature-section relative py-24 overflow-hidden" ref={ref}>
       <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Section header */}
         <motion.div
@@ -102,7 +102,7 @@ export function AboutSection() {
                 {[
                   { label: "Degree", value: "BSc (Hons) Computer Science - Cyber Security" },
                   { label: "Current Role", value: "Business Development & IT Coordinator - Kanz Industry (Jan 2026 - Present)" },
-                  { label: "Certifications", value: "CompTIA CySA+, Security+, eJPTv2, ICCA, and more" },
+                  { label: "Certifications", value: "CompTIA CySA+, Security+, eJPTv2, PT1, ICCA, Network+ Training" },
                   { label: "SOC Experience", value: "50+ hours of live shift duty (Tier 1)" },
                   { label: "Location", value: "Jeddah, Saudi Arabia" },
                   { label: "Languages", value: "English, Arabic" },

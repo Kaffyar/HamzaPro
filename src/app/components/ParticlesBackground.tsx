@@ -7,16 +7,29 @@ export function ParticlesBackground() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Check if user prefers reduced motion
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    const saveData = Boolean(connection?.saveData);
+    const lowPowerCpu = navigator.hardwareConcurrency > 0 && navigator.hardwareConcurrency <= 4;
+
+    if (prefersReducedMotion || saveData || lowPowerCpu) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      width = window.innerWidth;
+      height = window.innerHeight;
+
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
     resizeCanvas();
@@ -30,47 +43,62 @@ export function ParticlesBackground() {
       size: number;
     }[] = [];
 
-    const particleCount = 50;
+    const screenArea = width * height;
+    const particleCount = Math.max(18, Math.min(38, Math.floor(screenArea / 65000)));
+    const maxDistance = width < 900 ? 95 : 125;
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        size: Math.random() * 2 + 0.5,
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.24,
+        vy: (Math.random() - 0.5) * 0.24,
+        size: Math.random() * 1.8 + 0.4,
       });
     }
 
-    let animationFrameId: number;
+    let animationFrameId = 0;
+    let lastFrameTime = 0;
+    const frameDuration = 1000 / 30;
 
-    const animate = () => {
+    const animate = (timestamp: number) => {
+      if (document.hidden) {
+        animationFrameId = requestAnimationFrame(animate);
+        return;
+      }
+
+      if (timestamp - lastFrameTime < frameDuration) {
+        animationFrameId = requestAnimationFrame(animate);
+        return;
+      }
+
+      lastFrameTime = timestamp;
+
       ctx.fillStyle = "rgba(11, 10, 8, 0.06)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, width, height);
 
       particles.forEach((particle, i) => {
         particle.x += particle.vx;
         particle.y += particle.vy;
 
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+        if (particle.x < 0 || particle.x > width) particle.vx *= -1;
+        if (particle.y < 0 || particle.y > height) particle.vy *= -1;
 
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(245, 158, 11, 0.3)";
+        ctx.fillStyle = "rgba(245, 158, 11, 0.24)";
         ctx.fill();
 
-        // Draw lines to nearby particles
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[j].x - particle.x;
           const dy = particles[j].y - particle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 150) {
+          if (distance < maxDistance) {
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(245, 158, 11, ${0.1 * (1 - distance / 150)})`;
+            ctx.strokeStyle = `rgba(245, 158, 11, ${0.08 * (1 - distance / maxDistance)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -80,7 +108,7 @@ export function ParticlesBackground() {
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    animate();
+    animationFrameId = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
@@ -93,7 +121,7 @@ export function ParticlesBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0 opacity-40"
+      className="fixed inset-0 pointer-events-none z-0 opacity-30"
       style={{ mixBlendMode: "screen" }}
     />
   );

@@ -1,49 +1,37 @@
-﻿import { motion } from "motion/react";
+import { motion } from "motion/react";
+import { Award, BadgeCheck } from "lucide-react";
 import { useInView } from "./hooks/useInView";
-import { Award } from "lucide-react";
-import securityPlusBadge from "../../assets/certs/security-plus.svg";
-import ejptBadge from "../../assets/certs/ejptv2.svg";
-import pt1Badge from "../../assets/certs/pt1.svg";
-import cysaPlusBadge from "../../assets/certs/cysa-plus.svg";
-import iccaBadge from "../../assets/certs/icca.svg";
-import networkPlusBadge from "../../assets/certs/network-plus.svg";
 
 const certificates = [
   {
     title: "CompTIA Security+",
     issuer: "CompTIA",
     accent: "from-red-500/30 to-red-500/10",
-    image: securityPlusBadge,
   },
   {
     title: "eJPTv2 (Junior Penetration Tester)",
     issuer: "INE Security",
     accent: "from-blue-500/30 to-blue-500/10",
-    image: ejptBadge,
   },
   {
     title: "PT1 (Penetration Testing)",
     issuer: "TryHackMe",
     accent: "from-green-500/30 to-green-500/10",
-    image: pt1Badge,
   },
   {
     title: "CompTIA CySA+",
     issuer: "CompTIA",
     accent: "from-violet-500/30 to-violet-500/10",
-    image: cysaPlusBadge,
   },
   {
     title: "ICCA (Certified Cloud Associate)",
     issuer: "INE Security",
     accent: "from-indigo-500/30 to-indigo-500/10",
-    image: iccaBadge,
   },
   {
     title: "CompTIA Network+ (Training)",
     issuer: "40+ Hours Completed",
     accent: "from-amber-500/30 to-amber-500/10",
-    image: networkPlusBadge,
   },
 ];
 
@@ -53,7 +41,7 @@ export function CertificatesSection() {
   return (
     <section
       id="certificates"
-      className="relative py-24 overflow-hidden"
+      className="signature-section relative py-24 overflow-hidden"
       ref={ref}
     >
       <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
@@ -84,8 +72,8 @@ export function CertificatesSection() {
                 ease: [0.25, 0.4, 0.25, 1],
               }}
               whileHover={{
-                scale: 1.05,
-                y: -5,
+                scale: 1.03,
+                y: -3,
                 transition: { duration: 0.3 },
               }}
               className="group relative p-5 rounded-xl bg-slate-900/60 border border-slate-800/50 hover:border-amber-500/40 transition-all duration-500 overflow-hidden backdrop-blur-sm hover:shadow-[0_0_20px_rgba(245,_158,_11,_0.15)]"
@@ -100,14 +88,10 @@ export function CertificatesSection() {
                 <Award size={18} />
               </motion.div>
 
-              <div className="relative">
-                <div className="mb-4 rounded-lg overflow-hidden border border-slate-700/40 bg-slate-950/40">
-                  <img
-                    src={cert.image}
-                    alt={cert.title}
-                    className="w-full h-40 object-cover"
-                    loading="lazy"
-                  />
+              <div className="relative min-h-[7rem] flex flex-col justify-center">
+                <div className="mb-3 flex items-center gap-2 text-amber-300/70">
+                  <BadgeCheck size={16} />
+                  <span className="text-[11px] tracking-wide uppercase">Certified</span>
                 </div>
                 <h4 className="text-foreground/90 mb-1.5 text-sm pr-6">
                   {cert.title}
