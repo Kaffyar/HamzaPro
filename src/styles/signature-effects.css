@@ -275,23 +275,34 @@
   z-index: 120;
   pointer-events: none;
   transform: translate3d(-100px, -100px, 0);
+  will-change: transform;
 }
 
-.signature-cursor__ring {
+.signature-cursor__glyph {
   position: absolute;
-  left: -12px;
-  top: -12px;
-  width: 24px;
-  height: 24px;
-  border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--brand-gold) 68%, transparent);
-  background: color-mix(in srgb, var(--brand-gold) 8%, transparent);
-  transition: transform 0.18s ease, border-color 0.18s ease;
+  left: -4px;
+  top: -4px;
+  display: grid;
+  place-items: center;
+  color: #b7c8ca;
+  filter: drop-shadow(0 1px 0 #4f9499) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.32));
 }
 
-.signature-cursor.is-pointer .signature-cursor__ring {
-  transform: scale(1.28);
-  border-color: color-mix(in srgb, var(--brand-gold-soft) 88%, white);
+.signature-cursor__glyph svg {
+  stroke: #4f9499;
+  stroke-width: 2.2;
+  fill: #b7c8ca;
+}
+
+.signature-cursor.is-pointer .signature-cursor__glyph {
+  left: -8px;
+  top: -8px;
+  color: #aebfc1;
+}
+
+.signature-cursor.is-pointer .signature-cursor__glyph svg {
+  stroke: #4a8f94;
+  fill: #aebfc1;
 }
 
 .signature-header {

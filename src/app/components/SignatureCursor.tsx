@@ -1,3 +1,4 @@
+import { Hand, MousePointer2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { CURSOR_ENABLED } from "../config/motion";
 import { usePowerMode } from "../hooks/usePowerMode";
@@ -10,12 +11,10 @@ export function SignatureCursor() {
   const { reducedMotion } = useReducedMotionSafe();
   const { shouldReduceEffects } = usePowerMode();
   const cursorRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef(0);
   const [enabled, setEnabled] = useState(false);
   const [visible, setVisible] = useState(false);
   const [isPointer, setIsPointer] = useState(false);
-  const targetPosition = useRef({ x: 0, y: 0 });
-  const easedPosition = useRef({ x: 0, y: 0 });
+  const pointerStateRef = useRef(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -43,31 +42,22 @@ export function SignatureCursor() {
   useEffect(() => {
     if (!enabled) return;
 
-    const animate = () => {
+    const handleMove = (event: MouseEvent) => {
       const cursor = cursorRef.current;
       if (cursor) {
-        easedPosition.current.x += (targetPosition.current.x - easedPosition.current.x) * 0.2;
-        easedPosition.current.y += (targetPosition.current.y - easedPosition.current.y) * 0.2;
-        cursor.style.transform = `translate3d(${easedPosition.current.x}px, ${easedPosition.current.y}px, 0)`;
+        cursor.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`;
       }
-      rafRef.current = requestAnimationFrame(animate);
-    };
 
-    rafRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, [enabled]);
-
-  useEffect(() => {
-    if (!enabled) return;
-
-    const handleMove = (event: MouseEvent) => {
-      targetPosition.current = { x: event.clientX, y: event.clientY };
       if (!visible) {
-        easedPosition.current = { x: event.clientX, y: event.clientY };
+        setVisible(true);
       }
-      setVisible(true);
+
       const target = event.target instanceof Element ? event.target.closest(INTERACTIVE_SELECTOR) : null;
-      setIsPointer(Boolean(target));
+      const nextPointer = Boolean(target);
+      if (nextPointer !== pointerStateRef.current) {
+        pointerStateRef.current = nextPointer;
+        setIsPointer(nextPointer);
+      }
     };
 
     const handleLeave = (event: MouseEvent) => {
@@ -89,7 +79,9 @@ export function SignatureCursor() {
 
   return (
     <div ref={cursorRef} className={`signature-cursor ${isPointer ? "is-pointer" : ""}`} aria-hidden="true">
-      <span className="signature-cursor__ring" />
+      <span className="signature-cursor__glyph">
+        {isPointer ? <Hand size={28} /> : <MousePointer2 size={28} />}
+      </span>
     </div>
   );
 }
