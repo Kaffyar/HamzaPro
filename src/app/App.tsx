@@ -89,6 +89,14 @@ export default function App() {
   }, [introComplete]);
 
   useEffect(() => {
+    if (introComplete) return;
+    const failSafeId = window.setTimeout(() => {
+      setIntroComplete(true);
+    }, 2200);
+    return () => window.clearTimeout(failSafeId);
+  }, [introComplete]);
+
+  useEffect(() => {
     if (!lenisEnabled) return;
 
     const lenis = new Lenis({

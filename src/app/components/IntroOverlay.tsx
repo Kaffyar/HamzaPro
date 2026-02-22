@@ -16,6 +16,11 @@ export function IntroOverlay({ skip, onComplete }: IntroOverlayProps) {
   const rightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (skip) {
+      onComplete();
+      return;
+    }
+
     const root = document.documentElement;
     const container = containerRef.current;
     const logo = logoRef.current;
@@ -24,11 +29,6 @@ export function IntroOverlay({ skip, onComplete }: IntroOverlayProps) {
     const right = rightRef.current;
 
     if (!container || !logo || !top || !left || !right) return;
-
-    if (skip) {
-      onComplete();
-      return;
-    }
 
     root.classList.add("is-scroll-blocked");
     let completed = false;
